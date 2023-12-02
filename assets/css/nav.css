@@ -7,15 +7,17 @@
     width:100%;
   }
 
-.fixed-image {
-    display: block; /* 图片作为块级元素显示 */
-    width: 75%;
-    height: auto;
-    
-    margin-top: 20px auto; /* 图片与前一个元素的间距，可以根据需要调整 */
-    
-    /* 可以添加更多的样式，例如边框、阴影等 */
+.image-container {
+  text-align: center; /* 使内部的块级元素（如图片）水平居中 */
 }
+
+.fixed-image {
+  display: inline-block; /* 将图片作为内联块级元素显示 */
+  width: 80%; /* 图片宽度为容器宽度的80% */
+  /* height: auto; 图片的高度会自动调整以保持比例 */
+  /* 不需要设置 margin-top，除非您想要在图片上方有空间 */
+}
+
   .topnav #myLinks {
     display: inline;
   }
