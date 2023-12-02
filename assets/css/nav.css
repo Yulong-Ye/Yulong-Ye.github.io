@@ -9,8 +9,10 @@
 
 .fixed-image {
     display: block; /* 图片作为块级元素显示 */
-    max-width: 50%; /* 图片最大宽度，保证图片不会超过容器宽度 */
-    margin-top: 20px; /* 图片与前一个元素的间距，可以根据需要调整 */
+    width: 75%;
+    height: auto;
+    
+    margin-top: 20px auto; /* 图片与前一个元素的间距，可以根据需要调整 */
     
     /* 可以添加更多的样式，例如边框、阴影等 */
 }
