@@ -13,10 +13,9 @@
 
 .fixed-image {
   display: inline-block; /* 将图片作为内联块级元素显示 */
-  padding: 20px;
+  padding-top: 20px;
   width: 100%; /* 图片宽度为容器宽度的80% */
-  margintop：50px;
-  margin-bottom: 35px;
+
   /* height: auto; 图片的高度会自动调整以保持比例 */
   /* 不需要设置 margin-top，除非您想要在图片上方有空间 */
 }
