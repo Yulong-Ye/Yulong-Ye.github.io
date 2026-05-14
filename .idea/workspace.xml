@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="18c3567f-162d-4683-b0f8-3a124e802cf1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.Rhistory" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/google_scholar_crawler.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNAME" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_data/navigation.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_data/publications.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/.Rhistory" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/contact.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/navigation.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/news.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/publications.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/services.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/talks.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/teaching.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_layouts/.Rhistory" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_layouts/homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/_layouts/homepage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/minimal-light-ori.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/.Rhistory" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/nav-ori.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/pub-ori.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/CT.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/EC.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/EC1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/EC2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/Elon_副本.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/Yulong.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/university-logo-small-horizontal-blue-156eae9527.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/university-logo-small-horizontal-white-156eae9527.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/whiting.logo.horizontal.white.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/whiting.logo.vertical.white.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/img/wse.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/github-stars.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/google-citation.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/mpii_files/mpi-inf.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/mpii_files/mpii.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/mpii_files/print.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/teaser/cvpr23_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/演示文稿1.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/google_scholar_crawler/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/google_scholar_crawler/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robots.txt" beforeDir="false" afterPath="$PROJECT_DIR$/robots.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sitemap.xml" beforeDir="false" afterPath="$PROJECT_DIR$/sitemap.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/Users/oliver/PycharmProjects/Yulong-Ye.github.io" value="3DjPYsSCZiQvHUj9KhIeEdAd8pG" />
+    </persistenceIdMap>
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="75" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3DjPYsSCZiQvHUj9KhIeEdAd8pG" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/oliver/PycharmProjects/Yulong-Ye.github.io",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-024ed6589d45-c2ffad84badb-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-261.23567.174" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="18c3567f-162d-4683-b0f8-3a124e802cf1" name="Changes" comment="" />
+      <created>1778792558690</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1778792558690</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

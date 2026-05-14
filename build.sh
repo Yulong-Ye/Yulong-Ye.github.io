@@ -1,3 +1,2 @@
-bundle add webrick
-
-bundle exec jekyll server
+bundle install
+bundle exec jekyll serve
