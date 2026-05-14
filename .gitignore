@@ -3,5 +3,6 @@ _site
 Gemfile.lock
 *.gem
 .DS_Store
+.idea/
 .jekyll-cache
 git-update.sh

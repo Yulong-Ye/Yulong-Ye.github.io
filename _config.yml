@@ -22,9 +22,9 @@ linkedin:
 twitter:
 
 # Images 
-avatar: ./assets/img/Elon.jpg
-favicon: ./assets/img/favicon.png
-favicon_dark: ./assets/img/favicon-dark.png
+avatar: ./assets/images/profile/avatar.jpg
+favicon: ./assets/images/icons/favicon.png
+favicon_dark: ./assets/images/icons/favicon-dark.png
 
 # Footnotes
 footnote:
