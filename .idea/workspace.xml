@@ -4,33 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18c3567f-162d-4683-b0f8-3a124e802cf1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_layouts/homepage.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/minimal-light.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/nav.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/pub.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/style.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/DIP.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/DLiSA.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/Domland.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/Elon.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/KGB.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/KTM.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/LDEA.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/MSTL.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/University-of -Birmingham.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/favicon-dark.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/favicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/favicon-switcher.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/scale.fix.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/vanilla-back-to-top.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/index.md" afterDir="false" />
-    </list>
+    <list default="true" id="18c3567f-162d-4683-b0f8-3a124e802cf1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
