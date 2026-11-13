@@ -515,6 +515,117 @@
       .about-hero h2, h2.section-title, .major-title, .news-title { font-size: 25px; }
       .about-hero h2::after, h2.section-title::after, .major-title::after { width: 34px; height: 3px; }
     }
+
+    /* Mobile layout: keep the same editorial design without horizontal overflow. */
+    html, body { overflow-x: hidden; }
+    @media (max-width: 900px) {
+      .shell { width: min(100% - 32px, 720px); }
+      .topbar-inner {
+        min-height: 64px;
+        height: auto;
+        gap: 12px;
+        padding: 10px 0;
+      }
+      .wordmark { flex: 0 0 auto; white-space: nowrap; }
+      .nav {
+        min-width: 0;
+        flex: 1 1 auto;
+        justify-content: flex-end;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .nav::-webkit-scrollbar { display: none; }
+      .nav a { flex: 0 0 auto; white-space: nowrap; }
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 34px;
+        padding-top: 30px;
+        padding-bottom: 50px;
+      }
+      .sidebar {
+        position: static;
+        display: block;
+        min-width: 0;
+      }
+      .portrait { margin: 0 auto 14px; }
+      .sidebar h1, .sidebar .role, .sidebar .profile-line { text-align: center; }
+      .profile-divider { margin-top: 20px; }
+      .contact-block, .links { margin-top: 16px; }
+      .links { justify-content: center; }
+      .side-nav {
+        display: flex;
+        gap: 15px;
+        margin-top: 24px;
+        padding: 13px 0 2px;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+      }
+      .side-nav::-webkit-scrollbar { display: none; }
+      .side-nav a { flex: 0 0 auto; }
+      .service-scholar-grid { grid-template-columns: 1fr; }
+      .service-panel, .scholar-card { height: auto; }
+      .metrics { width: 100%; }
+    }
+    @media (max-width: 650px) {
+      .shell { width: calc(100% - 28px); }
+      .topbar-inner { align-items: flex-start; }
+      .wordmark { font-size: 11px; }
+      .nav { justify-content: flex-start; gap: 2px; }
+      .nav a { padding: 6px 7px; font-size: 10px; }
+      .layout { gap: 28px; padding-top: 24px; padding-bottom: 42px; }
+      .portrait { width: 104px; height: 104px; }
+      .sidebar h1 { font-size: 32px; }
+      .role { font-size: 12px; }
+      .profile-line, .contact-block { font-size: 11px; }
+      .contact-block strong { font-size: 12px; }
+      .about-copy p { font-size: 14px; line-height: 1.65; }
+      .about-hero h2, h2.section-title, .major-title, .news-title { font-size: 25px; }
+      .about-hero h2::after, h2.section-title::after, .major-title::after { width: 34px; height: 3px; }
+      .service-panel, .scholar-card { padding: 18px; }
+      .service-panel .card-title, .scholar-card .card-title { font-size: 18px; }
+      .metrics { gap: 4px; margin-top: 16px; }
+      .ring { width: 76px; height: 76px; }
+      .ring::after { inset: 7px; }
+      .ring strong { font-size: 18px; }
+      .metric { font-size: 9px; }
+      .pub-toolbar { display: block; padding: 9px; }
+      .filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 3px;
+        scrollbar-width: none;
+      }
+      .filters::-webkit-scrollbar { display: none; }
+      .filter-btn { flex: 0 0 auto; }
+      .selects {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 7px;
+        margin-top: 8px;
+      }
+      .selects select {
+        flex: 1 1 calc(50% - 7px);
+        width: auto;
+        max-width: none;
+        min-width: 0;
+      }
+      .selects #resetFilters { flex: 0 0 auto; }
+      .pub-count { margin-left: auto; }
+      .pub-scroll { height: 520px; padding-inline: 8px; }
+      .pub-item { grid-template-columns: 48px minmax(0, 1fr); gap: 9px; padding: 15px 0 18px; }
+      .pub-date { font-size: 9px; }
+      .pub-timeline::before { left: 42px; }
+      .pub-date .timeline-dot { left: 37px; }
+      .pub-title { font-size: 14px; overflow-wrap: anywhere; }
+      .pub-authors { font-size: 10px; overflow-wrap: anywhere; }
+      .pub-venue-full { overflow-wrap: anywhere; }
+      .news-row { grid-template-columns: 58px minmax(0, 1fr); gap: 8px; }
+      .news-row p { font-size: 12px; }
+      .news-badge { display: inline-block; margin: 6px 0 0; white-space: normal; }
+      .footer-inner { width: calc(100% - 28px); }
+    }
   </style>
 </head>
 <body>
