@@ -12,6 +12,12 @@ from update_scholar import build_snapshot, write_snapshot
 
 
 class ScholarSnapshotTests(unittest.TestCase):
+    def test_scholar_dependencies_pin_legacy_bibtexparser_api(self):
+        requirements_path = Path(__file__).resolve().parents[1] / "requirements-scholar.txt"
+        requirements = requirements_path.read_text(encoding="utf-8").splitlines()
+
+        self.assertIn("bibtexparser<2", requirements)
+
     def test_build_snapshot_extracts_all_time_metrics(self):
         author = {
             "scholar_id": "ignored-by-explicit-profile-id",
