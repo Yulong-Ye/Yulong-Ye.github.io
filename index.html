@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yulong Ye</title>
+  <style>
+    :root {
+      --paper: #fbfaf7;
+      --surface: #fffefd;
+      --ink: #20282b;
+      --muted: #72736e;
+      --line: #e5e0d7;
+      --accent: #d9795f;
+      --accent-dark: #8b4f42;
+      --mint: #f1eee7;
+      --gold: #e9b949;
+      --coral: #e9795b;
+      --shadow: 0 22px 60px rgba(20, 36, 45, 0.08);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 90% -10%, rgba(244,236,221,.75), transparent 32rem),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, select { font: inherit; }
+    .shell { width: min(1320px, calc(100% - 48px)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(251,250,247,.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(219,228,228,.78);
+    }
+    .topbar-inner { height: 72px; display: flex; align-items: center; justify-content: space-between; }
+    .wordmark { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 800; letter-spacing: .02em; }
+    .wordmark-mark { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; color: white; background: var(--accent); font-size: 13px; }
+    .nav { display: flex; gap: 6px; align-items: center; }
+    .nav a { color: var(--muted); font-size: 13px; font-weight: 700; padding: 9px 12px; border-radius: 999px; }
+    .nav a:hover, .nav a.active { color: var(--accent-dark); background: #f5e6df; }
+    .demo-pill { color: var(--accent-dark); background: #fff4d5; padding: 7px 11px; border-radius: 999px; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+
+    .layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 44px; padding: 58px 0 80px; }
+    .sidebar { position: sticky; top: 104px; align-self: start; }
+    .portrait {
+      width: 128px; height: 128px; border-radius: 38px; display: grid; place-items: center;
+      color: var(--accent-dark); font-size: 38px; font-weight: 850; letter-spacing: -.06em;
+      background: linear-gradient(135deg, #dff3ec, #b6ddd1); border: 1px solid #c7e7dd;
+      box-shadow: inset 0 0 0 8px rgba(255,255,255,.37);
+    }
+    .eyebrow { margin: 28px 0 8px; color: var(--accent); font-size: 11px; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 10px; font-size: clamp(38px, 4vw, 58px); line-height: .98; letter-spacing: -.065em; }
+    .role { color: var(--muted); font-size: 15px; }
+    .identity-copy { font-size: 14px; color: var(--muted); margin: 18px 0 22px; }
+    .links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .link-chip { display: inline-flex; align-items: center; gap: 7px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--accent-dark); background: rgba(255,255,255,.6); font-size: 12px; font-weight: 750; }
+    .link-chip:hover { border-color: var(--accent); background: var(--mint); }
+    .side-nav { margin-top: 42px; padding-top: 22px; border-top: 1px solid var(--line); }
+    .side-nav a { display: block; padding: 8px 0; color: var(--muted); font-size: 13px; font-weight: 700; }
+    .side-nav a:hover { color: var(--accent); }
+    .side-note { margin-top: 30px; padding: 15px 16px; border: 1px solid #cfe8df; border-radius: 17px; background: rgba(223,243,236,.62); color: var(--accent-dark); font-size: 12px; }
+
+    .content { min-width: 0; }
+    .hero { padding: 42px 48px 44px; border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); border: 1px solid rgba(219,228,228,.8); }
+    .hero-kicker { display: flex; justify-content: space-between; gap: 20px; align-items: center; margin-bottom: 34px; }
+    .hero-kicker span:first-child { color: var(--muted); font-size: 12px; font-weight: 700; }
+    .status { display: inline-flex; gap: 7px; align-items: center; color: var(--accent-dark); font-size: 12px; font-weight: 800; }
+    .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #3dbb83; box-shadow: 0 0 0 5px rgba(61,187,131,.13); }
+    .hero h2 { max-width: 760px; margin-bottom: 20px; font-size: clamp(28px, 4vw, 47px); line-height: 1.06; letter-spacing: -.055em; }
+    .hero p { max-width: 760px; color: var(--muted); font-size: 16px; }
+    .hero p strong { color: var(--ink); }
+    .research-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .research-tags span { padding: 8px 11px; background: #f4f8f7; border: 1px solid #e2ecea; border-radius: 10px; color: var(--accent-dark); font-size: 12px; font-weight: 750; }
+
+    .section { margin-top: 64px; scroll-margin-top: 98px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 20px; }
+    .section-label { margin-bottom: 7px; color: var(--accent); font-size: 11px; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; }
+    h2.section-title { margin: 0; font-size: 28px; line-height: 1.1; letter-spacing: -.045em; }
+    .section-summary { max-width: 440px; margin: 0; color: var(--muted); font-size: 13px; }
+    .about-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 16px; }
+    .card { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); padding: 24px; }
+    .card p:last-child { margin-bottom: 0; }
+    .card p { color: var(--muted); font-size: 14px; }
+    .mini-list { display: grid; gap: 13px; margin: 0; padding: 0; list-style: none; }
+    .mini-list li { display: grid; grid-template-columns: 70px 1fr; gap: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--line); font-size: 13px; }
+    .mini-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+    .mini-list strong { color: var(--ink); font-size: 12px; }
+    .mini-list span { color: var(--muted); }
+
+    .split-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 16px; align-items: stretch; }
+    .service-card { background: #15343b; color: #eef9f4; border: 0; }
+    .service-card .section-label { color: #8de2c1; }
+    .service-card .card-title, .scholar-card .card-title { margin: 0 0 16px; font-size: 20px; letter-spacing: -.03em; }
+    .service-list { display: grid; gap: 13px; list-style: none; margin: 0; padding: 0; }
+    .service-list li { display: flex; gap: 10px; align-items: baseline; padding-top: 13px; border-top: 1px solid rgba(223,243,236,.18); color: #c1d8d1; font-size: 13px; }
+    .service-list strong { min-width: 86px; color: #fff; font-size: 12px; }
+    .scholar-card { background: #fffdf8; border-color: #f1e7cf; }
+    .scholar-head { display: flex; justify-content: space-between; gap: 15px; align-items: start; }
+    .updated { color: #987e4a; font-size: 11px; }
+    .metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 24px; min-width: 0; }
+    .metric { min-width: 0; display: grid; justify-items: center; gap: 9px; color: var(--muted); font-size: 11px; font-weight: 800; text-align: center; }
+    .ring { --value: 72%; width: clamp(78px, 9vw, 104px); height: clamp(78px, 9vw, 104px); display: grid; place-items: center; border-radius: 50%; background: conic-gradient(var(--accent) var(--value), #e7efec 0); position: relative; }
+    .ring::after { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: #fffdf8; }
+    .ring strong { position: relative; z-index: 1; color: var(--ink); font-size: 24px; letter-spacing: -.06em; }
+    .metric small { color: #987e4a; font-size: 10px; font-weight: 700; }
+
+    .award-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .award { min-height: 116px; display: flex; flex-direction: column; justify-content: space-between; padding: 19px; border-radius: 17px; background: var(--surface); border: 1px solid var(--line); }
+    .award-year { color: var(--coral); font-size: 12px; font-weight: 850; }
+    .award p { margin: 12px 0 0; color: var(--ink); font-size: 14px; font-weight: 750; line-height: 1.35; }
+
+    .pub-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; padding: 14px; border: 1px solid var(--line); border-bottom: 0; border-radius: 17px 17px 0 0; background: var(--surface); }
+    .filters { display: flex; flex-wrap: wrap; gap: 6px; }
+    .filter-btn { border: 1px solid transparent; border-radius: 999px; padding: 7px 10px; background: #f2f6f5; color: var(--muted); cursor: pointer; font-size: 11px; font-weight: 800; }
+    .filter-btn:hover, .filter-btn.selected { color: white; background: var(--accent); }
+    .pub-count { color: var(--muted); font-size: 12px; font-weight: 750; white-space: nowrap; }
+    .selects { display: flex; gap: 7px; }
+    select { max-width: 120px; border: 1px solid var(--line); border-radius: 9px; background: white; padding: 7px 9px; color: var(--muted); font-size: 11px; }
+    .pub-scroll { height: 540px; overflow-y: auto; padding: 7px 14px 14px; border: 1px solid var(--line); border-radius: 0 0 17px 17px; background: #fbfcfc; scrollbar-color: #a7cfc1 transparent; }
+    .pub-item { display: grid; grid-template-columns: 48px 1fr; gap: 18px; padding: 23px 9px; border-bottom: 1px solid var(--line); }
+    .pub-item:last-child { border-bottom: 0; }
+    .pub-year { padding-top: 4px; color: var(--accent); font-size: 12px; font-weight: 850; }
+    .pub-venue { display: inline-flex; padding: 4px 7px; border-radius: 6px; color: var(--accent-dark); background: var(--mint); font-size: 10px; font-weight: 850; letter-spacing: .05em; }
+    .pub-title { margin: 9px 0 6px; font-size: 15px; line-height: 1.32; letter-spacing: -.015em; }
+    .pub-authors { margin: 0 0 10px; color: var(--muted); font-size: 12px; }
+    .pub-authors .me { color: var(--ink); font-weight: 850; }
+    .pub-links { display: flex; gap: 10px; }
+    .pub-links a { color: var(--accent); font-size: 11px; font-weight: 850; }
+    .pub-links a:hover { text-decoration: underline; }
+    .pub-links a.placeholder-link { color: var(--muted); cursor: default; opacity: .65; }
+    .pub-links a.placeholder-link:hover { text-decoration: none; }
+    .empty { padding: 40px 20px; color: var(--muted); text-align: center; font-size: 13px; }
+    .footer { margin-top: 74px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; gap: 26px; padding-top: 34px; }
+      .sidebar { position: static; display: grid; grid-template-columns: 110px 1fr; gap: 18px; align-items: center; }
+      .portrait { width: 110px; height: 110px; border-radius: 30px; }
+      .sidebar .eyebrow { margin-top: 0; }
+      .sidebar .identity-copy, .sidebar .side-nav, .sidebar .side-note { grid-column: 1 / -1; }
+      .sidebar .side-nav { margin-top: 4px; display: flex; gap: 18px; padding-top: 14px; overflow-x: auto; }
+      .sidebar .side-nav a { white-space: nowrap; }
+      .sidebar .side-note { margin-top: 0; }
+    }
+    @media (max-width: 650px) {
+      .shell { width: min(100% - 28px, 560px); }
+      .topbar-inner { height: auto; min-height: 64px; gap: 10px; }
+      .nav { display: none; }
+      .layout { padding-bottom: 46px; }
+      .hero { padding: 28px 23px; }
+      .hero-kicker { align-items: start; flex-direction: column; gap: 10px; margin-bottom: 26px; }
+      .about-grid, .split-grid, .award-grid { grid-template-columns: 1fr; }
+      .section { margin-top: 48px; }
+      .section-head { display: block; }
+      .section-summary { margin-top: 10px; }
+      .metrics { gap: 6px; }
+      .ring { width: 82px; height: 82px; }
+      .ring::after { inset: 7px; }
+      .ring strong { font-size: 19px; }
+      .pub-toolbar { align-items: stretch; flex-direction: column; }
+      .selects select { max-width: none; flex: 1; }
+      .pub-item { grid-template-columns: 37px 1fr; gap: 10px; padding-inline: 3px; }
+    }
+    /* Revision 02: a quieter, Zhensu-inspired editorial structure. */
+    h1, h2, h3, .pub-title, .award p, .service-subhead, .organizing-title { font-family: Georgia, "Times New Roman", serif; }
+    .layout { grid-template-columns: 300px minmax(0, 1fr); gap: 56px; padding-top: 64px; }
+    .portrait { width: 176px; height: 176px; border-radius: 50%; font-size: 46px; background: radial-gradient(circle at 35% 25%, #eef7f1, #b7dacd); box-shadow: inset 0 0 0 7px rgba(255,255,255,.45), 0 14px 32px rgba(20,36,45,.08); }
+    .sidebar .eyebrow { margin-top: 26px; }
+    .sidebar h1 { font-size: clamp(42px, 4.4vw, 58px); line-height: .94; }
+    .role { font-size: 15px; line-height: 1.65; }
+    .profile-line { margin: 5px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .profile-divider { height: 1px; margin: 30px 0 22px; background: var(--line); }
+    .contact-block { display: grid; gap: 6px; margin-bottom: 18px; color: var(--muted); font-size: 13px; }
+    .contact-block strong { color: var(--ink); font-size: 14px; }
+    .links { gap: 7px; }
+    .link-chip { border-radius: 9px; background: var(--surface); font-size: 12px; }
+    .side-nav { margin-top: 30px; }
+    .side-nav a { font-size: 12px; letter-spacing: .02em; }
+    .about-hero { padding: 6px 0 14px; scroll-margin-top: 98px; }
+    .about-hero .section-label { margin-bottom: 13px; }
+    .about-hero h2 { margin: 0 0 28px; font-size: clamp(38px, 5vw, 58px); line-height: .98; letter-spacing: -.06em; }
+    .about-copy { display: grid; gap: 22px; }
+    .about-copy p { max-width: 770px; margin: 0; color: var(--ink); font-size: clamp(16px, 1.55vw, 20px); line-height: 1.75; }
+    .about-copy strong { font-weight: 850; }
+    .about-copy a { color: var(--coral); font-weight: 800; border-bottom: 1px dotted currentColor; }
+    .about-hero .research-tags { margin-top: 30px; }
+    .research-interest-label { margin-top: 30px; }
+    .section { margin-top: 78px; }
+    .section-head { margin-bottom: 25px; }
+    h2.section-title { font-size: clamp(31px, 4vw, 44px); font-family: Georgia, "Times New Roman", serif; }
+    .section-label { color: var(--coral); }
+
+    .service-scholar-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(280px, .85fr); gap: 18px; align-items: stretch; }
+    .service-panel { padding: 28px; background: var(--surface); }
+    .service-panel .section-label { color: var(--coral); }
+    .service-panel .card-title { margin: 0 0 22px; font-family: Georgia, "Times New Roman", serif; font-size: 25px; }
+    .service-columns { display: grid; grid-template-columns: 1fr; gap: 28px; }
+    .service-subhead { margin-bottom: 17px; font-size: 24px; line-height: 1; }
+    .service-kicker { margin: -5px 0 15px; color: var(--muted); font-size: 12px; }
+    .service-row { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 15px 0 14px 18px; border-top: 1px solid var(--line); }
+    .service-row::before { content: ""; position: absolute; left: 0; top: 22px; width: 8px; height: 8px; border: 2px solid var(--coral); border-radius: 50%; background: var(--surface); }
+    .service-year { color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+    .service-count { display: flex; align-items: baseline; gap: 7px; margin-top: 5px; }
+    .service-count strong { font-family: Georgia, "Times New Roman", serif; font-size: 42px; line-height: .9; }
+    .service-count span { color: var(--muted); font-size: 13px; }
+    .venue-toggle { align-self: center; border: 0; padding: 8px 0; color: var(--muted); background: transparent; cursor: pointer; font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .venue-toggle:hover { color: var(--coral); }
+    .venue-details { display: flex; flex-wrap: wrap; gap: 7px; padding: 0 0 15px 18px; }
+    .venue-details[hidden] { display: none; }
+    .venue-chip { padding: 6px 9px; border-radius: 8px; background: #f0f1ed; color: #60645f; font-size: 11px; font-weight: 800; }
+    .organizing-column { padding: 25px 0 0; border-top: 1px solid var(--line); }
+    .organizing-item { padding: 17px 0 0; border-top: 1px solid var(--line); }
+    .organizing-year { color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+    .organizing-title { margin: 8px 0; font-size: 24px; line-height: 1.1; }
+    .organizing-item p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+
+    .scholar-card { padding: 28px; }
+    .scholar-card .section-label { color: var(--coral); }
+    .scholar-card .card-title { font-family: Georgia, "Times New Roman", serif; font-size: 25px; }
+    .scholar-source { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+    .scholar-source a { color: var(--coral); font-weight: 800; }
+    .metrics { gap: 8px; margin-top: 8px; }
+    .ring { background: conic-gradient(var(--coral) var(--value), #ece8df 0); }
+    .ring::after { background: #fffdf8; }
+    .metric small { color: var(--muted); }
+
+    .award-list { border-top: 1px solid var(--line); }
+    .award-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 24px; align-items: baseline; padding: 19px 0; border-bottom: 1px solid var(--line); }
+    .award-row .award-year { color: var(--muted); font-size: 15px; font-weight: 700; }
+    .award-row p { margin: 0; color: var(--ink); font-size: 18px; line-height: 1.35; }
+    .award-row p strong { color: #8d7024; }
+
+    .pub-legend { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 12px; color: var(--muted); font-size: 11px; font-weight: 800; }
+    .legend-item { display: inline-flex; align-items: center; gap: 6px; }
+    .legend-swatch { width: 9px; height: 9px; border-radius: 3px; }
+    .legend-venue { background: #bce0d4; }
+    .legend-special { background: #f7e7b8; }
+    .pub-scroll { height: 650px; padding: 0 17px 18px; }
+    .pub-year-group { padding: 20px 8px 0; }
+    .pub-year-heading { display: flex; align-items: center; gap: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+    .pub-year-heading strong { font-family: Georgia, "Times New Roman", serif; font-size: 23px; }
+    .pub-year-heading span { margin-left: auto; color: var(--muted); font-size: 12px; }
+    .pub-timeline { position: relative; padding: 7px 0 0; }
+    .pub-timeline::before { content: ""; position: absolute; left: 70px; top: 18px; bottom: 18px; width: 1px; background: var(--line); }
+    .pub-item { position: relative; display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 18px; padding: 19px 0 22px; border-bottom: 0; }
+    .pub-date { position: relative; padding-top: 4px; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .pub-date .timeline-dot { position: absolute; z-index: 1; left: 65px; right: auto; top: 7px; width: 10px; height: 10px; border: 2px solid var(--coral); border-radius: 50%; background: var(--surface); }
+    .pub-body { min-width: 0; }
+    .pub-badges { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+    .pub-venue { max-width: 100%; padding: 5px 8px; border-radius: 7px; font-size: 10px; line-height: 1.25; letter-spacing: .01em; white-space: normal; }
+    .pub-venue.venue-conference { color: #984133; background: #f7ded9; }
+    .pub-venue.venue-journal { color: #276858; background: #dcefe8; }
+    .pub-venue.venue-preprint { color: #5f6a56; background: #e4e8dd; }
+    .pub-type { color: var(--muted); font-size: 10px; font-weight: 800; }
+    .pub-venue-full { margin-top: 6px; color: var(--muted); font-size: 11px; line-height: 1.3; }
+    .pub-title { margin: 9px 0 7px; font-size: 20px; line-height: 1.22; }
+    .pub-authors { font-size: 13px; }
+
+    @media (max-width: 900px) {
+      .service-scholar-grid { grid-template-columns: 1fr; }
+      .service-columns { grid-template-columns: 1fr; gap: 28px; }
+    }
+    @media (max-width: 650px) {
+      .layout { gap: 30px; padding-top: 38px; }
+      .portrait { width: 110px; height: 110px; font-size: 32px; }
+      .sidebar h1 { font-size: 40px; }
+      .about-hero h2 { font-size: 42px; }
+      .about-copy p { font-size: 16px; }
+      .award-row { grid-template-columns: 60px minmax(0, 1fr); gap: 13px; }
+      .award-row p { font-size: 15px; }
+      .pub-scroll { height: 560px; }
+      .pub-timeline::before { left: 51px; }
+      .pub-item { grid-template-columns: 63px minmax(0, 1fr); gap: 13px; }
+      .pub-date .timeline-dot { left: 46px; right: auto; }
+      .pub-title { font-size: 17px; }
+    }
+    /* Revision 03: smaller type, tighter rhythm, and category-based metadata. */
+    body { font-size: 14px; }
+    .shell { width: min(1280px, calc(100% - 56px)); }
+    .layout { grid-template-columns: 270px minmax(0, 1fr); gap: 48px; padding-top: 52px; }
+    .portrait { width: 150px; height: 150px; font-size: 40px; }
+    .sidebar h1 { font-size: clamp(38px, 3.8vw, 50px); }
+    .sidebar .eyebrow { margin-top: 22px; font-size: 10px; }
+    .role { font-size: 14px; }
+    .profile-line, .contact-block { font-size: 12px; }
+    .contact-block strong { font-size: 13px; }
+    .link-chip { padding: 7px 9px; font-size: 11px; }
+    .side-nav { margin-top: 25px; padding-top: 17px; }
+    .side-note { margin-top: 23px; padding: 12px 13px; font-size: 11px; }
+    .about-hero { padding-top: 2px; }
+    .about-hero h2 { margin-bottom: 22px; font-size: clamp(34px, 4.2vw, 46px); }
+    .about-copy { gap: 16px; }
+    .about-copy p { font-size: clamp(14px, 1.2vw, 16px); line-height: 1.7; }
+    .research-tags { gap: 10px; margin-top: 24px; }
+    .research-interest-label { margin-top: 22px; }
+    .research-tags span { padding: 9px 13px; border: 1px solid #cfe5df; border-radius: 13px; background: linear-gradient(145deg, #f9fffc, #e5f3ee); box-shadow: 0 6px 12px rgba(18,77,69,.08), inset 0 1px 0 rgba(255,255,255,.95); color: #14574f; font-size: 12px; transform: translateY(0); transition: transform .2s ease, box-shadow .2s ease; }
+    .research-tags span:nth-child(2) { transform: translateY(-4px); }
+    .research-tags span:nth-child(3) { transform: translateY(2px); }
+    .research-tags span:hover { transform: translateY(-5px); box-shadow: 0 10px 18px rgba(18,77,69,.12), inset 0 1px 0 rgba(255,255,255,.95); }
+    .section { margin-top: 60px; }
+    .section-head { margin-bottom: 18px; }
+    .section-label { margin-bottom: 5px; font-size: 10px; }
+    h2.section-title { font-size: clamp(27px, 3vw, 34px); }
+    .section-summary { font-size: 12px; }
+
+    .service-scholar-grid { grid-template-columns: minmax(0, 1.35fr) minmax(260px, .85fr); gap: 15px; }
+    .service-panel, .scholar-card { padding: 23px; }
+    .service-panel .card-title, .scholar-card .card-title { margin-bottom: 17px; font-size: 21px; }
+    .service-columns { gap: 20px; }
+    .service-subhead { margin-bottom: 12px; font-size: 20px; }
+    .service-kicker { margin-bottom: 10px; font-size: 11px; }
+    .service-row { padding: 13px 0 12px 16px; }
+    .service-row::before { top: 19px; width: 7px; height: 7px; }
+    .service-count strong { font-size: 31px; }
+    .service-count span, .venue-toggle { font-size: 11px; }
+    .venue-details { gap: 6px; padding: 0 0 12px 16px; }
+    .venue-chip { padding: 5px 7px; font-size: 10px; }
+    .scholar-head { gap: 10px; }
+    .scholar-source { margin-bottom: 16px; font-size: 12px; }
+    .metrics { gap: 5px; }
+    .ring { width: clamp(70px, 8vw, 92px); height: clamp(70px, 8vw, 92px); }
+    .ring::after { inset: 8px; }
+    .ring strong { font-size: 21px; }
+    .metric { font-size: 10px; }
+    .metric small { font-size: 9px; }
+
+    .award-row { grid-template-columns: 74px minmax(0, 1fr); gap: 18px; padding: 15px 0; }
+    .award-row .award-year { font-size: 13px; }
+    .award-row p { font-size: 15px; }
+
+    .pub-legend { gap: 10px; margin-bottom: 10px; font-size: 10px; }
+    .pub-toolbar { padding: 11px; }
+    .filter-btn, select { padding: 6px 8px; font-size: 10px; }
+    .pub-scroll { height: 600px; }
+    .pub-year-group { padding-top: 16px; }
+    .pub-year-heading strong { font-size: 20px; }
+    .pub-year-heading span { font-size: 11px; }
+    .pub-item { grid-template-columns: 76px minmax(0, 1fr); gap: 16px; padding: 15px 0 18px; }
+    .pub-date { font-size: 10px; }
+    .pub-title { margin: 7px 0 5px; font-size: 16px; }
+    .pub-authors { margin-bottom: 7px; font-size: 11px; }
+    .pub-links a { font-size: 10px; }
+    .pub-venue, .pub-type { font-size: 9px; }
+    .pub-venue.venue-conference, .pub-venue.venue-journal, .pub-venue.venue-preprint { color: #276858; background: #dcefe8; }
+    .pub-venue-full { margin-top: 5px; font-size: 9px; }
+    .pub-badge { display: inline-flex; align-items: center; padding: 4px 7px; border-radius: 6px; font-size: 9px; font-weight: 850; }
+    .pub-badge.quality { color: #916a1b; background: #f7e7b8; }
+    .pub-badge.award-tag { color: #9a4836; background: #f5d6cc; }
+    .pub-badge.accept { color: #744f8d; background: #eadcf1; }
+
+    @media (max-width: 650px) {
+      .shell { width: min(100% - 32px, 560px); }
+      .layout { gap: 26px; padding-top: 34px; }
+      .portrait { width: 106px; height: 106px; font-size: 31px; }
+      .sidebar h1 { font-size: 37px; }
+      .about-hero h2 { font-size: 38px; }
+      .section { margin-top: 48px; }
+      .service-scholar-grid { grid-template-columns: 1fr; }
+      .pub-scroll { height: 560px; }
+      .pub-item { grid-template-columns: 61px minmax(0, 1fr); gap: 12px; }
+    }
+    /* Revision 04: neutral palette, smaller type, and a news / filter layer. */
+    body { color: var(--ink); font-size: 13px; }
+    .wordmark { font-size: 13px; }
+    .demo-pill { background: #f7edcf; color: #806b2f; font-size: 10px; }
+    .layout { grid-template-columns: 258px minmax(0, 1fr); gap: 46px; padding-top: 46px; }
+    .portrait { width: 138px; height: 138px; color: #5f786b; background: radial-gradient(circle at 35% 25%, #faf8f1, #e6dfd0); box-shadow: inset 0 0 0 6px rgba(255,255,255,.58), 0 12px 28px rgba(79,66,46,.08); }
+    .portrait { overflow: hidden; padding: 0; }
+    .portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 48% 35%; transform: translate(-4px, 14px) scale(1.72); transform-origin: 50% 30%; }
+    .sidebar h1 { font-size: clamp(35px, 3.3vw, 46px); }
+    .sidebar .eyebrow { color: #897c68; font-size: 9px; letter-spacing: .13em; }
+    .role { color: #6b716e; font-size: 13px; }
+    .profile-line, .contact-block { font-size: 11px; }
+    .contact-block strong { color: var(--ink); font-size: 12px; }
+    .link-chip { border-color: #ded9d0; background: #fff; color: #555d5b; padding: 6px 8px; font-size: 10px; }
+    .side-nav a { color: #75756e; font-size: 11px; }
+    .side-note { border-color: #e6ddcd; background: #faf4e8; color: #776d5f; font-size: 10px; }
+    .section-label { color: var(--accent); font-size: 9px; letter-spacing: .16em; }
+    .about-hero h2 { font-size: clamp(32px, 3.8vw, 42px); }
+    .about-copy p { color: #303638; font-size: clamp(13px, 1.08vw, 15px); line-height: 1.72; }
+    .about-copy a { color: var(--accent); }
+    .research-interest-label { margin-top: 24px; }
+    .research-tags { gap: 8px; margin-top: 15px; }
+    .research-tags span { color: #4f5f5d; border-color: #e3dfd6; font-size: 11px; box-shadow: 0 5px 12px rgba(83,72,55,.07), inset 0 1px 0 rgba(255,255,255,.95); }
+    .research-tags span:nth-child(1) { background: #f7e3dc; border-color: #efd1c7; color: #895746; transform: translateY(0); }
+    .research-tags span:nth-child(2) { background: #e6edf1; border-color: #d2e0e8; color: #4f6573; transform: translateY(-3px); }
+    .research-tags span:nth-child(3) { background: #f3eacb; border-color: #eadcab; color: #806d31; transform: translateY(2px); }
+    .research-tags span:nth-child(4) { background: #e9e3f0; border-color: #dcd0e9; color: #695a79; transform: translateY(-1px); }
+    h2.section-title { font-size: clamp(25px, 2.7vw, 31px); }
+    .section-summary { font-size: 11px; }
+
+    .service-section-head { margin-bottom: 17px; }
+    .service-section-head .section-label { margin-bottom: 0; }
+    .service-scholar-grid { grid-template-columns: minmax(0, 1.38fr) minmax(255px, .82fr); gap: 14px; }
+    .service-panel, .scholar-card { border-color: #e5dfd6; border-radius: 16px; }
+    .service-panel .section-label, .scholar-card .section-label { color: var(--accent); }
+    .service-panel .card-title, .scholar-card .card-title { font-size: 19px; }
+    .service-subhead { font-size: 18px; }
+    .service-kicker { color: #88857d; font-size: 10px; }
+    .service-row { border-top-color: #e9e4dc; }
+    .service-row::before { border-color: var(--accent); }
+    .service-count strong { font-size: 28px; }
+    .service-count span, .venue-toggle { color: #777b76; font-size: 10px; }
+    .venue-toggle:hover { color: var(--accent); }
+    .venue-chip { background: #f0eee8; color: #666862; font-size: 9px; }
+    .scholar-card { background: #fffaf1; border-color: #ede1c8; }
+    .scholar-card .card-title { color: #20282b; }
+    .scholar-source { font-size: 11px; }
+    .scholar-source a { color: var(--accent); }
+    .ring { background: conic-gradient(var(--accent) var(--value), #ece7dc 0); }
+    .metric { font-size: 9px; }
+    .metric small { font-size: 8px; }
+
+    .news-section { margin-top: 55px; }
+    .news-head { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; margin-bottom: 14px; }
+    .news-title { display: flex; align-items: center; gap: 10px; margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(26px, 3vw, 34px); font-weight: 600; color: var(--accent); }
+    .news-title::after { content: ""; width: 52px; height: 5px; border-radius: 99px; background: #e6bd9c; }
+    .news-summary { margin: 0; color: var(--muted); font-size: 11px; }
+    .news-panel { height: 232px; overflow-y: auto; padding: 8px 17px; border: 1px solid #e3dbcc; border-radius: 15px; background: #fffdf8; box-shadow: 0 9px 22px rgba(85,70,44,.04); scrollbar-color: #d9c49d transparent; }
+    .news-row { display: grid; grid-template-columns: 75px minmax(0, 1fr); gap: 15px; padding: 13px 0; border-bottom: 1px solid #eee7db; }
+    .news-row:last-child { border-bottom: 0; }
+    .news-date { color: #918578; font-size: 11px; font-weight: 800; }
+    .news-row p { margin: 0; color: #343837; font-size: 13px; line-height: 1.45; }
+    .news-row strong { color: #2a302f; }
+    .news-badge { display: inline-flex; margin-left: 7px; padding: 3px 7px; border-radius: 99px; color: #85531e; background: #f8e4b7; font-size: 9px; font-weight: 850; white-space: nowrap; }
+
+    .award-row { padding: 13px 0; }
+    .award-row .award-year { font-size: 12px; }
+    .award-row p { font-size: 14px; }
+    .pub-legend { display: none; }
+    .pub-toolbar { border-radius: 15px 15px 0 0; }
+    .pub-scroll { border-radius: 0 0 15px 15px; background: #fffefd; }
+    .pub-title { font-size: 15px; }
+    .pub-title a { color: inherit; }
+    .pub-title a:hover { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .12em; }
+    .pub-type { display: none; }
+    .pub-venue.venue-conference, .pub-venue.venue-journal, .pub-venue.venue-preprint { color: #4d6e64; background: #e4eee8; }
+    .pub-badge { font-size: 8px; padding: 4px 6px; }
+
+    @media (max-width: 650px) {
+      .shell { width: min(100% - 30px, 560px); }
+      .layout { gap: 25px; padding-top: 33px; }
+      .portrait { width: 103px; height: 103px; }
+      .sidebar h1 { font-size: 35px; }
+      .about-hero h2 { font-size: 35px; }
+      .news-head { display: block; }
+      .news-summary { margin-top: 6px; }
+      .news-panel { height: 220px; }
+      .news-row { grid-template-columns: 64px minmax(0,1fr); gap: 10px; }
+    }
+    /* Revision 05: title-led hierarchy and shared panel surfaces. */
+    .section-label { display: none; }
+    .side-nav a { font-size: 11px; }
+    .side-nav a::first-letter { font-size: inherit; }
+    .about-hero h2, h2.section-title, .major-title { display: flex; align-items: center; gap: 11px; color: var(--accent); font-family: Georgia, "Times New Roman", serif; font-size: clamp(26px, 3vw, 34px); font-weight: 600; line-height: 1.05; letter-spacing: -.04em; }
+    .about-hero h2::after, h2.section-title::after, .major-title::after { content: ""; width: 52px; height: 5px; flex: 0 0 auto; border-radius: 99px; background: #e6bd9c; }
+    .about-hero h2 { margin-bottom: 24px; }
+    .research-title { margin: 24px 0 0; }
+    .service-section-head { display: block; margin: 0 0 16px; }
+    .service-title { margin: 0; }
+    .service-scholar-grid { align-items: start; }
+    .service-panel, .scholar-card, .news-panel, .pub-scroll { background: #fffefd; }
+    .scholar-card { height: auto; }
+    .service-panel .card-title, .scholar-card .card-title { margin-bottom: 18px; }
+    .service-subhead { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 16px; font-weight: 600; }
+    .service-kicker { display: none; }
+    .service-row { align-items: center; padding: 14px 0 13px 16px; }
+    .service-row::before { top: 50%; transform: translateY(-50%); }
+    .service-count { display: inline-flex; margin: 0; gap: 5px; }
+    .service-count strong { font-family: inherit; font-size: 16px; font-weight: 800; }
+    .service-count span { font-size: 12px; }
+    .service-group-label { display: flex; align-items: baseline; gap: 6px; }
+    .service-group-label span { color: var(--muted); font-size: 12px; font-weight: 500; }
+    .service-group-row { grid-template-columns: 1fr auto; }
+    .news-panel { background: #fffefd; }
+    .pub-scroll { background: #fffefd; }
+    .news-title { font-size: clamp(26px, 3vw, 34px); }
+    .section-head { margin-bottom: 16px; }
+    h2.section-title { margin: 0; }
+    .section-summary { margin-top: 4px; }
+    .research-tags { margin-top: 13px; }
+    .side-nav a { letter-spacing: 0; }
+    @media (max-width: 650px) {
+      .about-hero h2, h2.section-title, .major-title, .news-title { font-size: 27px; }
+      .about-hero h2::after, h2.section-title::after, .major-title::after { width: 38px; height: 4px; }
+    }
+    /* Revision 06: final cleanup and synchronized service cards. */
+    .sidebar h1 { white-space: nowrap; font-size: 36px; line-height: 1; letter-spacing: -.055em; }
+    .about-hero h2, h2.section-title, .major-title, .news-title { font-size: clamp(23px, 2.4vw, 29px); }
+    .about-hero h2::after, h2.section-title::after, .major-title::after { width: 42px; height: 4px; }
+    .service-scholar-grid { align-items: stretch; }
+    .service-panel, .scholar-card { height: 100%; }
+    .service-subhead { font-size: 17px; }
+    .service-group-label > span { font-size: 12px; }
+    .scholar-source, .updated, .metric small, .news-summary, .section-summary, .side-note { display: none; }
+    .metrics { margin-top: 20px; }
+    .footer { display: block; margin-top: 54px; padding: 20px 0 8px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; width: min(1320px, calc(100% - 96px)); margin: 0 auto; }
+    @media (max-width: 650px) {
+      .sidebar h1 { font-size: 32px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 6px; width: calc(100% - 48px); }
+      .about-hero h2, h2.section-title, .major-title, .news-title { font-size: 25px; }
+      .about-hero h2::after, h2.section-title::after, .major-title::after { width: 34px; height: 3px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="wordmark" href="#top">Academic Page</a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="active" href="#about">About</a><a href="#news">News</a><a href="#awards">Awards</a><a href="#publications">Publications</a><a href="#service">Service</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="shell layout">
+    <aside class="sidebar">
+      <div class="portrait" aria-label="Portrait of Yulong Ye"><img src="assets/profile.jpg" alt="Yulong Ye" /></div>
+      <h1>Yulong Ye</h1>
+      <div class="role">Ph.D. Student<br />University of Birmingham</div>
+      <p class="profile-line">School of Computer Science</p>
+      <div class="profile-divider"></div>
+      <div class="contact-block">
+        <strong>yxy382@student.bham.ac.uk</strong>
+        <span>University of Birmingham</span>
+        <span>Birmingham B15 2TT, United Kingdom</span>
+      </div>
+      <div class="links">
+        <a class="link-chip" href="mailto:yxy382@student.bham.ac.uk">Email</a>
+        <a class="link-chip" href="https://scholar.google.com/citations?user=dRAn7W4AAAAJ&hl=en" target="_blank" rel="noreferrer">Google Scholar</a>
+        <a class="link-chip" href="https://github.com/Yulong-Ye" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="link-chip" href="https://www.linkedin.com/in/yulong-ye-770757364/" target="_blank" rel="noreferrer">LinkedIn</a>
+      </div>
+      <nav class="side-nav" aria-label="Page sections">
+        <a href="#about">About</a>
+        <a href="#news">News</a>
+        <a href="#awards">Awards</a>
+        <a href="#publications">Publications</a>
+        <a href="#service">Service</a>
+      </nav>
+    </aside>
+
+    <div class="content">
+      <section id="about" class="about-hero">
+        <div class="section-label">01 / About</div>
+        <h2>About</h2>
+        <div class="about-copy">
+          <p>I am currently a <strong>Ph.D. student</strong> in the <a href="https://www.birmingham.ac.uk/study/departments/computer-science" target="_blank" rel="noreferrer">School of Computer Science</a> at the <a href="https://www.birmingham.ac.uk/" target="_blank" rel="noreferrer">University of Birmingham</a>, where my research focuses on software configuration tuning. Under the supervision of Prof. <a href="https://ideas-labo.github.io/" target="_blank" rel="noreferrer"><strong>Tao Chen</strong></a> and Prof. <a href="https://sites.google.com/view/miqing-li" target="_blank" rel="noreferrer"><strong>Miqing Li</strong></a>, I am developing state-of-the-art multi-fidelity configuration tuning algorithms, with the goal of improving the efficiency and performance of computationally expensive optimization processes in complex software systems.</p>
+          <p>I began my academic journey in the field of Evolutionary Computation at <a href="https://en.szu.edu.cn/" target="_blank" rel="noreferrer"><strong>Shenzhen University</strong></a>, where I completed my Master’s degree in Computer Technology under the supervision of Prof. <a href="https://scholar.google.com/citations?hl=zh-CN&amp;user=87XNTVsAAAAJ" target="_blank" rel="noreferrer"><strong>Qiuzhen Lin</strong></a>.</p>
+        </div>
+      </section>
+
+      <section id="news" class="section news-section">
+        <div class="news-head"><h2 class="news-title">News</h2></div>
+        <div class="news-panel">
+          <article class="news-row"><time class="news-date">2026/10</time><p>🏆 Received the <strong>ACM SIGSOFT Distinguished Paper Award</strong> for a paper at the <strong>41st IEEE/ACM International Conference on Automated Software Engineering (ASE 2026)</strong>.</p></article>
+          <article class="news-row"><time class="news-date">2026/10</time><p>🎉 Published at the <strong>41st IEEE/ACM International Conference on Automated Software Engineering (ASE)</strong>.</p></article>
+          <article class="news-row"><time class="news-date">2026/03</time><p>🎉 A paper appeared in <strong>ACM Transactions on Software Engineering and Methodology (TOSEM)</strong>.</p></article>
+          <article class="news-row"><time class="news-date">2025/04</time><p>🎉 Published at the <strong>47th ACM/IEEE International Conference on Software Engineering (ICSE)</strong>.</p></article>
+          <article class="news-row"><time class="news-date">2024/05</time><p>🏆 Received the 2nd Prize in the Soyotec Chinese Intelligent Optimization Competition.</p></article>
+          <article class="news-row"><time class="news-date">2023/11</time><p>🎓 Received a Full PhD Studentship from the School of Computer Science, University of Birmingham.</p></article>
+        </div>
+      </section>
+
+      <section id="awards" class="section">
+        <div class="section-head"><div><h2 class="section-title">Awards.</h2></div></div>
+        <div class="award-list"><div class="award-row"><span class="award-year">2026</span><p>🏆 ACM SIGSOFT Distinguished Paper Award · ASE 2026</p></div><div class="award-row"><span class="award-year">2024</span><p>🥈 2nd Prize Award in 2024 Soyotec Chinese Intelligent Optimization Competition for Dynamic Multi-Objective Optimization.</p></div><div class="award-row"><span class="award-year">2023</span><p>🎓 Full PhD Studentship in the School of Computer Science, University of Birmingham.</p></div><div class="award-row"><span class="award-year">2023</span><p>🥈 2nd Runner-up Award in IEEE CEC 2023 Competition on Dynamic Constrained Multiobjective Optimization.</p></div><div class="award-row"><span class="award-year">2022</span><p>🏅 National Scholarship for Postgraduates <strong>(Top 1%)</strong>, Shenzhen University.</p></div><div class="award-row"><span class="award-year">2022</span><p>🏆 The First Prize Scholarship, Shenzhen University.</p></div><div class="award-row"><span class="award-year">2022</span><p>🥈 2nd Runner-up Award in IEEE CEC 2022 Competition on Seeking Multiple Optima in Dynamic Environments.</p></div></div>
+      </section>
+
+      <section id="publications" class="section">
+        <div class="section-head"><div><h2 class="section-title">Publications.</h2></div></div>
+        <div class="pub-legend"><span class="legend-item"><i class="legend-swatch legend-venue"></i>Venue</span><span class="legend-item"><i class="legend-swatch legend-special"></i>Special tag</span></div>
+        <div class="pub-toolbar"><div class="filters" role="group" aria-label="Author filters"><button class="filter-btn selected" data-author="all">All</button><button class="filter-btn" data-author="lead">★ First / Co-first</button><button class="filter-btn" data-author="corresponding">✉ Corresponding</button></div><div class="selects"><select id="typeFilter" aria-label="Filter by publication type"><option value="all">Type · All</option><option value="conference">Conference</option><option value="journal">Journal</option><option value="other">Other</option></select><select id="classFilter" aria-label="Filter by classification"><option value="all">Class · All</option><option value="CCF A">CCF A</option><option value="CCF C">CCF C</option><option value="SCI Q1">SCI Q1</option><option value="SCI Q2">SCI Q2</option><option value="Award">Award</option></select><select id="yearFilter" aria-label="Filter by year"><option value="all">Year · All</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option></select><select id="venueFilter" aria-label="Filter by venue"><option value="all">Venue · All</option><option value="ASE">ASE</option><option value="TOSEM">TOSEM</option><option value="ICSE">ICSE</option><option value="TEVC">TEVC</option><option value="EAAI">EAAI</option><option value="ESWA">ESWA</option><option value="TSMC">TSMC</option><option value="KBS">KBS</option><option value="IS">IS</option><option value="Memetic Computing">Memetic Computing</option><option value="MSR">MSR</option><option value="SSBSE">SSBSE</option><option value="DOCS">DOCS</option><option value="arXiv">arXiv</option></select><button id="resetFilters" class="filter-btn">Reset</button><span id="pubCount" class="pub-count" aria-live="polite"></span></div></div>
+        <div id="pubList" class="pub-scroll" aria-live="polite"></div>
+      </section>
+
+      <section id="service" class="section">
+        <h2 class="major-title service-title">Services</h2>
+        <div class="service-scholar-grid">
+          <article class="card service-panel">
+            <h3 class="card-title">Reviewing</h3>
+            <div class="service-columns">
+              <div class="reviewing-column">
+                <div class="service-row service-group-row"><div class="service-group-label"><span class="service-subhead">Conference</span><span>· 3 venues</span></div><button class="venue-toggle" aria-expanded="false" data-target="venues-conference">Venues⌄</button></div>
+                <div id="venues-conference" class="venue-details" hidden><span class="venue-chip">IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER)</span><span class="venue-chip">The ACM Web Conference (WWW)</span><span class="venue-chip">IEEE World Congress on Services (SERVICES)</span></div>
+                <div class="service-row service-group-row"><div class="service-group-label"><span class="service-subhead">Journal</span><span>· 10 venues</span></div><button class="venue-toggle" aria-expanded="false" data-target="venues-journal">Venues⌄</button></div>
+                <div id="venues-journal" class="venue-details" hidden><span class="venue-chip">IEEE Transactions on Evolutionary Computation (TEVC)</span><span class="venue-chip">IEEE Transactions on Systems, Man, and Cybernetics: Systems (TSMC)</span><span class="venue-chip">IEEE Transactions on Computational Social Systems (TCSS)</span><span class="venue-chip">IEEE Transactions on Emerging Topics in Computational Intelligence (TETCI)</span><span class="venue-chip">IEEE Transactions on Image Processing (TIP)</span><span class="venue-chip">ACM Transactions on Autonomous and Adaptive Systems (TAAS)</span><span class="venue-chip">Information Sciences (IS)</span><span class="venue-chip">Applied Soft Computing (ASC)</span><span class="venue-chip">Knowledge-Based Systems (KBS)</span><span class="venue-chip">Swarm and Evolutionary Computation (SEC)</span></div>
+              </div>
+            </div>
+          </article>
+          <article class="card scholar-card">
+            <div class="scholar-head"><div><h3 class="card-title">Google Scholar</h3></div></div>
+            <div class="metrics"><div class="metric"><div class="ring" style="--value: 84%"><strong id="scholar-citations">448</strong></div><span>Citations</span></div><div class="metric"><div class="ring" style="--value: 62%"><strong id="scholar-hindex">11</strong></div><span>h-index</span></div><div class="metric"><div class="ring" style="--value: 48%"><strong id="scholar-i10-index">11</strong></div><span>i10-index</span></div></div>
+          </article>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer"><div class="footer-inner"><span>© 2026 Yulong Ye</span><span>Last updated: Nov 12, 2026</span></div></footer>
+
+  <script>
+    const publications = [
+      { year: 2026, month: 'Oct', monthOrder: 10, venue: 'ASE', venueType: 'conference', badges: [{ label: 'CCF A', kind: 'quality' }, { label: '🏆 ACM SIGSOFT Distinguished Paper Award', filter: 'Award', kind: 'award-tag' }], title: 'Less Is More: Tuning Configurable Systems with Imperfect Fidelity', authors: '<b class="me">Yulong Ye</b>, Miqing Li, Tao Chen', authorType: 'first', links: [{ label: 'Paper', href: 'https://arxiv.org/abs/2608.00759' }, { label: 'Code', href: 'https://github.com/ideas-labo/mftune' }] },
+      { year: 2026, month: 'Mar', monthOrder: 3, venue: 'TOSEM', venueType: 'journal', badges: [{ label: 'CCF A', kind: 'quality' }, { label: 'SCI Q1', kind: 'quality' }], title: 'Revealing Domain-Spatiality Patterns for Configuration Tuning: Domain Knowledge Meets Fitness Landscapes', authors: '<b class="me">Yulong Ye</b>, Hongyuan Liang, Chao Jiang, Miqing Li, Tao Chen', authorType: 'first', links: [{ label: 'Paper', href: 'https://arxiv.org/abs/2603.19897' }, { label: 'Code', href: 'https://github.com/ideas-labo/domland' }] },
+      { year: 2026, month: 'Oct', monthOrder: 10, venue: 'arXiv', venueType: 'other', badges: [], title: 'Configuring RAG Systems: What Breaks, Where Originates, and How to Fix', authors: 'L. Chen, Y. Ma, <b class="me">Yulong Ye</b>, Z. Xiang, T. Chen', authorType: 'other', links: [{ label: 'Paper', href: 'https://arxiv.org/abs/2610.18567' }] },
+      { year: 2026, month: 'May', monthOrder: 5, venue: 'arXiv', venueType: 'other', badges: [], title: 'LLMSYS-HPOBench: Hyperparameter Optimization Benchmark Suite for Real-World LLM Systems', authors: 'Siyu Wu, <b class="me">Yulong Ye</b>, Zezhen Xiang, Pengzhou Chen, Gangda Xiong, Tao Chen', authorType: 'co', links: [{ label: 'Paper', href: 'https://arxiv.org/abs/2605.08305' }, { label: 'Code', href: 'https://github.com/ideas-labo/llmsys-hpobench' }] },
+      { year: 2026, month: 'Jul', monthOrder: 7, venue: 'arXiv', venueType: 'other', badges: [], title: 'When to Use Which? Benchmarking Optimisers for Configurable Systems under Varying Budgets', authors: 'Chao Jiang, <b class="me">Yulong Ye</b>, Tao Chen, Miqing Li', authorType: 'other', links: [{ label: 'Paper', href: 'https://arxiv.org/abs/2607.16476' }] },
+      { year: 2025, month: 'Apr', monthOrder: 4, venue: 'ICSE', venueType: 'conference', badges: [{ label: 'CCF A', kind: 'quality' }], title: 'Distilled Lifelong Self-Adaptation for Configurable Systems', authors: '<b class="me">Yulong Ye</b>, Tao Chen, Miqing Li', authorType: 'first', links: [{ label: 'Paper', href: 'https://arxiv.org/abs/2501.00840' }, { label: 'Code', href: 'https://github.com/ideas-labo/dlisa' }] },
+      { year: 2025, month: 'Nov', monthOrder: 11, venue: 'MSR', venueType: 'conference', badges: [{ label: 'CCF C', kind: 'quality' }], title: 'MOOT: A Repository of Many Multi-Objective Optimization Tasks', authors: 'Tim Menzies, Tao Chen, <b class="me">Yulong Ye</b>, Kishan Kumar Ganguly, Amirali Rayegan, Srinath Srinivasan, Andre Lustosa', authorType: 'other', links: [{ label: 'Paper', href: 'https://arxiv.org/abs/2511.16882' }] },
+      { year: 2025, month: 'Jul', monthOrder: 7, venue: 'ESWA', venueType: 'journal', badges: [{ label: 'SCI Q1', kind: 'quality' }], title: 'Joint Computation Offloading and Service Caching in Vehicular Edge Computing via a Dynamic Coevolutionary Multiobjective Optimization Algorithm', authors: 'Qijie Qiu, <b class="me">Yulong Ye</b>, Lingjie Li, Zhijiao Xiao, Qiuzhen Lin, Zhong Ming', authorType: 'other', links: [{ label: 'Paper', href: 'https://www.sciencedirect.com/science/article/pii/S0957417425014435' }] },
+      { year: 2024, month: 'Apr', monthOrder: 4, venue: 'TEVC', venueType: 'journal', badges: [{ label: 'SCI Q1', kind: 'quality' }], title: 'Learning-Based Directional Improvement Prediction for Dynamic Multiobjective Optimization', authors: '<b class="me">Yulong Ye</b>, Songbai Liu, Junwei Zhou, Qiuzhen Lin, Min Jiang, Kay Chen Tan', authorType: 'first', links: [{ label: 'Paper', href: 'https://ieeexplore.ieee.org/document/10508204/' }, { label: 'Code', href: 'https://github.com/Yulong-Ye/DIP-DMOEA' }] },
+      { year: 2024, month: 'Mar', monthOrder: 3, venue: 'EAAI', venueType: 'journal', badges: [{ label: 'SCI Q1', kind: 'quality' }], title: 'A Localized Decomposition Evolutionary Algorithm for Imbalanced Multi-objective Optimization', authors: '<b class="me">Yulong Ye</b>, Qiuzhen Lin, Ka-Chun Wong, Jianqiang Li, Zhong Ming, Carlos A. Coello Coello', authorType: 'first', links: [{ label: 'Paper', href: 'https://www.sciencedirect.com/science/article/abs/pii/S0952197623017487' }] },
+      { year: 2024, month: 'Sep', monthOrder: 9, venue: 'TEVC', venueType: 'journal', badges: [{ label: 'SCI Q1', kind: 'quality' }], title: 'Multiobjective Many-Tasking Evolutionary Optimization Using Diversified Gaussian-Based Knowledge Transfer', authors: 'Qiuzhen Lin, Qianhui Wang, Baihao Chen, <b class="me">Yulong Ye</b>, Lijia Ma, Kay Chen Tan', authorType: 'other', links: [{ label: 'Paper', href: 'https://doi.org/10.1109/TEVC.2024.3467048' }] },
+      { year: 2024, month: 'Jul', monthOrder: 7, venue: 'SSBSE', venueType: 'conference', badges: [], title: 'GreenStableYolo: Optimizing Inference Time and Image Quality of Text-to-Image Generation', authors: "Jingzhi Gong, Sisi Li, Giordano d'Aloisio, Zishuo Ding, <b class=\"me\">Yulong Ye</b>, William B. Langdon, Federica Sarro", authorType: 'other', links: [{ label: 'Paper', href: 'https://doi.org/10.1007/978-3-031-64573-0_7' }] },
+      { year: 2023, month: 'Oct', monthOrder: 10, venue: 'TSMC', venueType: 'journal', badges: [{ label: 'SCI Q1', kind: 'quality' }], title: 'Dynamic Multiobjective Evolutionary Optimization via Knowledge Transfer and Maintenance', authors: 'Qiuzhen Lin, <b class="me">Yulong Ye</b>, Lijia Ma, Min Jiang, Kay Chen Tan', authorType: 'other', links: [{ label: 'Paper', href: 'https://ieeexplore.ieee.org/document/10292939/' }, { label: 'Code', href: 'https://github.com/Yulong-Ye/KTM-DMOEA' }] },
+      { year: 2023, month: 'Sep', monthOrder: 9, venue: 'DOCS', venueType: 'conference', badges: [], title: 'Dynamic Constrained Multi-Objective Evolutionary Optimization via Adaptive Two-Stage Archiving and Autoencoder Prediction', authors: 'Qianhui Wang, <b class="me">Yulong Ye</b>, Qingling Zhu, Songbai Liu, Qiuzhen Lin', authorType: 'other', links: [{ label: 'Paper', href: 'https://ieeexplore.ieee.org/document/10294439/' }] },
+      { year: 2023, month: 'Jun', monthOrder: 6, venue: 'EAAI', venueType: 'journal', badges: [{ label: 'SCI Q1', kind: 'quality' }], title: 'A Kriging Model-Based Evolutionary Algorithm with Support Vector Machine for Dynamic Multimodal Optimization', authors: 'Xunfeng Wu, Qiuzhen Lin, Wu Lin, <b class="me">Yulong Ye</b>, Qingling Zhu, Victor C. M. Leung', authorType: 'other', links: [{ label: 'Paper', href: 'https://www.sciencedirect.com/science/article/abs/pii/S0952197623002233' }] },
+      { year: 2023, month: 'Mar', monthOrder: 3, venue: 'Memetic Computing', venueType: 'journal', badges: [{ label: 'SCI Q2', kind: 'quality' }], title: 'A Novel Multimodal Multiobjective Memetic Algorithm with a Local Detection Mechanism and a Clustering-Based Selection Strategy', authors: 'Naili Luo, <b class="me">Yulong Ye</b>, Wu Lin, Qiuzhen Lin, Victor C. M. Leung', authorType: 'other', links: [{ label: 'Paper', href: 'https://doi.org/10.1007/s12293-022-00353-0' }] },
+      { year: 2022, month: 'Aug', monthOrder: 8, venue: 'KBS', venueType: 'journal', badges: [{ label: 'SCI Q1', kind: 'quality' }], title: 'Knowledge guided Bayesian classification for dynamic multi-objective optimization', authors: '<b class="me">Yulong Ye</b>, Lingjie Li, Qiuzhen Lin, Ka-Chun Wong, Jianqiang Li, Zhong Ming', authorType: 'first', links: [{ label: 'Paper', href: 'https://www.sciencedirect.com/science/article/pii/S0950705122005810' }] },
+      { year: 2022, month: 'Aug', monthOrder: 8, venue: 'IS', venueType: 'journal', badges: [{ label: 'SCI Q1', kind: 'quality' }], title: 'Multiple source transfer learning for dynamic multiobjective optimization', authors: '<b class="me">Yulong Ye</b>, Qiuzhen Lin, Lijia Ma, Ka-Chun Wong, Maoguo Gong, Carlos A. Coello Coello', authorType: 'first', links: [{ label: 'Paper', href: 'https://www.sciencedirect.com/science/article/pii/S0020025522005527' }] },
+      { year: 2022, month: 'Oct', monthOrder: 10, venue: 'DOCS', venueType: 'conference', badges: [], title: 'Clustering-based Autoencoding for Dynamic Multiobjective Evolutionary Optimization', authors: '<b class="me">Yulong Ye</b>, Qingling Zhu, Lingjie Li, Jianyong Chen', authorType: 'first', links: [{ label: 'Paper', href: 'https://ieeexplore.ieee.org/document/9967742/' }] }
+    ];
+
+    const venueNames = {
+      ASE: 'IEEE/ACM International Conference on Automated Software Engineering',
+      TOSEM: 'ACM Transactions on Software Engineering and Methodology',
+      ICSE: 'International Conference on Software Engineering',
+      TEVC: 'IEEE Transactions on Evolutionary Computation',
+      EAAI: 'Engineering Applications of Artificial Intelligence',
+      ESWA: 'Expert Systems with Applications',
+      TSMC: 'IEEE Transactions on Systems, Man, and Cybernetics: Systems',
+      KBS: 'Knowledge-Based Systems',
+      IS: 'Information Sciences',
+      'Memetic Computing': 'Memetic Computing',
+      MSR: 'International Conference on Mining Software Repositories',
+      SSBSE: 'International Symposium on Search-Based Software Engineering',
+      DOCS: 'International Conference on Data-Driven Optimization of Complex Systems',
+      arXiv: 'arXiv'
+    };
+
+    const pubList = document.querySelector('#pubList');
+    const typeFilter = document.querySelector('#typeFilter');
+    const classFilter = document.querySelector('#classFilter');
+    const yearFilter = document.querySelector('#yearFilter');
+    const venueFilter = document.querySelector('#venueFilter');
+    const pubCount = document.querySelector('#pubCount');
+    let authorFilter = 'all';
+
+    function renderPublicationLinks(pub) {
+      const linkMap = Object.fromEntries((pub.links || []).map(link => [link.label, link.href]));
+      return ['Paper', 'Code'].map(label => {
+        const href = linkMap[label] || '#';
+        if (href === '#') return `<a class="placeholder-link" href="#" aria-disabled="true">${label} ↗</a>`;
+        return `<a href="${href}" target="_blank" rel="noreferrer">${label} ↗</a>`;
+      }).join('');
+    }
+
+    function renderPublicationTitle(pub) {
+      const paper = (pub.links || []).find(link => link.label === 'Paper');
+      if (!paper || paper.href === '#') return `<h3 class="pub-title">${pub.title}</h3>`;
+      return `<h3 class="pub-title"><a href="${paper.href}" target="_blank" rel="noreferrer">${pub.title}</a></h3>`;
+    }
+
+    function renderPublications() {
+      const year = yearFilter.value;
+      const venue = venueFilter.value;
+      const type = typeFilter.value;
+      const classification = classFilter.value;
+      const filtered = publications
+        .filter(pub => {
+          const authorMatches = authorFilter === 'all' || (authorFilter === 'lead' && ['first', 'co'].includes(pub.authorType)) || (authorFilter === 'corresponding' && pub.corresponding);
+          return authorMatches && (year === 'all' || String(pub.year) === year) && (venue === 'all' || pub.venue === venue) && (type === 'all' || pub.venueType === type) && (classification === 'all' || (pub.badges || []).some(tag => (tag.filter || tag.label.replace('🏆 ', '')) === classification));
+        })
+        .sort((a, b) => b.year - a.year || b.monthOrder - a.monthOrder);
+      pubCount.textContent = `${filtered.length} / ${publications.length} papers`;
+      const groups = filtered.reduce((result, pub) => { (result[pub.year] ||= []).push(pub); return result; }, {});
+      pubList.innerHTML = Object.keys(groups).sort((a, b) => b - a).map(groupYear => { let previousMonth = null; const items = groups[groupYear].map(pub => { const showMonth = pub.monthOrder !== previousMonth; previousMonth = pub.monthOrder; const monthLabel = showMonth && pub.month !== '—' ? pub.month : ''; const fullVenue = venueNames[pub.venue] || pub.venue; const fullVenueMarkup = fullVenue !== pub.venue ? `<div class="pub-venue-full">${fullVenue}</div>` : ''; return `<article class="pub-item"><div class="pub-date"><span>${monthLabel}</span><i class="timeline-dot"></i></div><div class="pub-body"><div class="pub-badges"><span class="pub-venue venue-${pub.venueType}" title="${fullVenue}">${pub.venue}</span><span class="pub-type">${pub.venueType}</span>${(pub.badges || []).map(tag => `<span class="pub-badge ${tag.kind}">${tag.label}</span>`).join('')}</div>${fullVenueMarkup}${renderPublicationTitle(pub)}<p class="pub-authors">${pub.authors}</p><div class="pub-links">${renderPublicationLinks(pub)}</div></div></article>`; }).join(''); return `<section class="pub-year-group"><div class="pub-year-heading"><strong>${groupYear}</strong><span>${groups[groupYear].length} paper${groups[groupYear].length === 1 ? '' : 's'}</span></div><div class="pub-timeline">${items}</div></section>`; }).join('') || '<div class="empty">No publications match these filters.</div>';
+    }
+
+    pubList.addEventListener('click', event => { if (event.target.closest('a.placeholder-link')) event.preventDefault(); });
+    async function loadScholarStats() {
+      try {
+        const response = await fetch('data/scholar.json', { cache: 'no-store' });
+        if (!response.ok) return;
+        const stats = await response.json();
+        const fields = [['scholar-citations', stats.citations], ['scholar-hindex', stats.hIndex], ['scholar-i10-index', stats.i10Index]];
+        if (fields.some(([, value]) => !Number.isInteger(value) || value < 0)) return;
+        fields.forEach(([id, value]) => { document.getElementById(id).textContent = value; });
+      } catch (error) {
+        console.warn('Scholar metrics unavailable; keeping fallback values.', error);
+      }
+    }
+    document.querySelectorAll('.filter-btn[data-author]').forEach(button => button.addEventListener('click', () => { document.querySelectorAll('.filter-btn[data-author]').forEach(item => item.classList.remove('selected')); button.classList.add('selected'); authorFilter = button.dataset.author; renderPublications(); }));
+    document.querySelectorAll('.venue-toggle').forEach(button => button.addEventListener('click', () => { const details = document.getElementById(button.dataset.target); const isOpen = button.getAttribute('aria-expanded') === 'true'; button.setAttribute('aria-expanded', String(!isOpen)); button.textContent = isOpen ? 'Venues⌄' : 'Venues⌃'; details.hidden = isOpen; }));
+    typeFilter.addEventListener('change', renderPublications);
+    classFilter.addEventListener('change', renderPublications);
+    yearFilter.addEventListener('change', renderPublications);
+    venueFilter.addEventListener('change', renderPublications);
+    document.querySelector('#resetFilters').addEventListener('click', () => { authorFilter = 'all'; typeFilter.value = 'all'; classFilter.value = 'all'; yearFilter.value = 'all'; venueFilter.value = 'all'; document.querySelectorAll('.filter-btn[data-author]').forEach(item => item.classList.toggle('selected', item.dataset.author === 'all')); renderPublications(); });
+    renderPublications();
+    loadScholarStats();
+  </script>
+</body>
+</html>

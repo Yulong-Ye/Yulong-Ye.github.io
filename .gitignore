@@ -1,0 +1,10 @@
+_site
+.sass-cache
+Gemfile.lock
+*.gem
+.DS_Store
+.idea/
+.jekyll-cache
+git-update.sh
+__pycache__/
+.pytest_cache/
